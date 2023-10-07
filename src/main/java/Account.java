@@ -5,7 +5,7 @@ public abstract class Account implements Comparable<Account>
     public abstract double monthlyInterest();
     public abstract double monthlyFee();
 
-    public double getBalance()
+    protected double getBalance()
     {
         return balance;
     }
@@ -15,6 +15,9 @@ public abstract class Account implements Comparable<Account>
     {
         /*if(holder.equals(acct.holder) && balance == acct.getBalance())
             return true;
-        return false;*/
+        else
+            return false;*/
     }
+
+
 }

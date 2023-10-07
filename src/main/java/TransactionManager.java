@@ -1,2 +1,4 @@
-public class TransactionManager {
+public class TransactionManager
+{
+
 }

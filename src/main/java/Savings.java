@@ -4,13 +4,19 @@ public class Savings extends Account
     @Override
     public double monthlyInterest()
     {
-        return 0;
+        if(isLoyal)
+            return .0425;
+        else
+            return .04;
     }
 
     @Override
     public double monthlyFee()
     {
-        return 0;
+        if(getBalance() >= 500)
+            return 0;
+        else
+            return 25;
     }
 
     @Override
