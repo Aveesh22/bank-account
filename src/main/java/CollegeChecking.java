@@ -1,10 +1,11 @@
 public class CollegeChecking extends Checking
 {
     private Campus campus; //campus code
+    public static final double NO_MONTHLY_FEE = 0.00;
 
-    @Override
+   @Override
     public double monthlyFee()
     {
-        return 0;
+        return NO_MONTHLY_FEE;
     }
 }
