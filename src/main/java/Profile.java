@@ -7,6 +7,10 @@ public class Profile implements Comparable<Profile>
     @Override
     public int compareTo(Profile profile)
     {
-        return 0;
+        int lnameVal = lname.compareToIgnoreCase(profile.lname);
+        int fnameVal = fname.compareToIgnoreCase(profile.fname);
+        int dobVal = dob.compareTo(profile.dob);
+
+
     }
 }
