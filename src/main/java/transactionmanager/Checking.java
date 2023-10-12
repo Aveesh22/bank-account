@@ -1,8 +1,25 @@
+package transactionmanager;
+
 public class Checking extends Account
 {
     public static final double MONTHLY_INTEREST = 0.01;
     public static final double NO_MONTHLY_FEE = 0.00;
     public static final double MONTHLY_FEE = 12;
+
+    /**
+     * Default constructor
+     */
+    public Checking() {}
+
+    /**
+     * Parameterized constructor
+     * @param holder Profile object for the account holder
+     * @param balance current balance in the account
+     */
+    public Checking(Profile holder, double balance) {
+        this.holder = holder;
+        this.balance = balance;
+    }
 
     /**
      * Overrides the monthlyInterest() method to return the monthly interest

@@ -1,3 +1,5 @@
+package transactionmanager;
+
 public abstract class Account implements Comparable<Account>
 {
     protected Profile holder;

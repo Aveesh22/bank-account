@@ -1,3 +1,5 @@
+package transactionmanager;
+
 /**
  * Enum class to define all the months of the year with their
  * order in the calendar and the number of total days they have.

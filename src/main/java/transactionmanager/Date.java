@@ -1,7 +1,9 @@
+package transactionmanager;
+
 import java.util.Calendar;
 
 /**
- * This class defines a Date for an Event
+ * This class defines a Date
  * @author Patryk Dziedzic, Aveesh Patel
  */
 public class Date implements Comparable<Date>

@@ -1,3 +1,5 @@
+package transactionmanager;
+
 public class MoneyMarket extends Savings
 {
     public static final int MIN_BALANCE_FOR_NO_FEE = 2000;
@@ -8,11 +10,15 @@ public class MoneyMarket extends Savings
 
     private int withdrawal; //number of withdrawals
 
-
+    /**
+     * Parameterized Constructor
+     * @param holder
+     * @param balance
+     */
     public MoneyMarket(Profile holder, double balance)
     {
         if(balance < MIN_BALANCE_FOR_NO_FEE)
-            System.out.println("Minimum of $2000 to open a Money Market account."); //PLACEHOLDER UNSURE IF THIS IS RIGHT
+            System.out.println("Minimum of $2000 to open a Money Market account.");
         else
         {
             this.holder = holder;

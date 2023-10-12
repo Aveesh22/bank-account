@@ -1,3 +1,5 @@
+package transactionmanager;
+
 public class AccountDatabase
 {
     private Account[] accounts; //list of various types of accounts
@@ -7,11 +9,20 @@ public class AccountDatabase
 
     public static final int NOT_FOUND = -1;
 
+
+    /**
+     * Getter for numAcct
+     * @return the number of accounts in the list
+     */
+    public int getNumAcct() {
+        return numAcct;
+    }
+
     /**
      * Set the numAcct variable to be the
      * length of the accounts variable
      */
-    public void setNumAccts()
+    public void setNumAcct()
     {
         int i = 0;
         for(Account a : accounts)
@@ -96,7 +107,7 @@ public class AccountDatabase
         if (accounts[accounts.length - 1] != null)
             grow();
 
-        setNumAccts();
+        setNumAcct();
         return addSuccess;
     }
 
@@ -116,7 +127,7 @@ public class AccountDatabase
                 accounts[i] = accounts[i + 1];
                 i++;
             }
-            setNumAccts();
+            setNumAcct();
             return true;
         }
         else
