@@ -2,7 +2,7 @@ package transactionmanager;
 
 /**
  * Enum class to describe indices for the array of tokens in an A command.
- * @author Patryk Dziedzic, Aveesh Patel
+ * @author Aveesh Patel, Patryk Dziedzic
  */
 public enum Campus
 {

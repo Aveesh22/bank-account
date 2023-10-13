@@ -1,5 +1,11 @@
 package transactionmanager;
 
+/**
+ * This class defines a Checking account with specific
+ * parameters for monthly interest and fees and inherits
+ * other properties and behaviors from the Account class
+ * @author Aveesh Patel, Patryk Dziedzic
+ */
 public class Checking extends Account
 {
     public static final double MONTHLY_INTEREST = 0.01;
@@ -7,16 +13,20 @@ public class Checking extends Account
     public static final double MONTHLY_FEE = 12;
 
     /**
-     * Default constructor
+     * Default constructor to initialize a Checking account instance
      */
-    public Checking() {}
+    public Checking()
+    {
+
+    }
 
     /**
-     * Parameterized constructor
+     * Parameterized constructor to initialize a Checking account instance
      * @param holder Profile object for the account holder
      * @param balance current balance in the account
      */
-    public Checking(Profile holder, double balance) {
+    public Checking(Profile holder, double balance)
+    {
         this.holder = holder;
         this.balance = balance;
     }

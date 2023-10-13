@@ -1,5 +1,10 @@
 package transactionmanager;
 
+/**
+ * This class defines a money market account with specific monthly
+ * interest and fees and inherits other properties and behaviors
+ * from the Savings class
+ */
 public class MoneyMarket extends Savings
 {
     public static final int MIN_BALANCE_FOR_NO_FEE = 2000;
@@ -11,9 +16,9 @@ public class MoneyMarket extends Savings
     private int withdrawal; //number of withdrawals
 
     /**
-     * Parameterized Constructor
-     * @param holder
-     * @param balance
+     * Parameterized Constructor which initializes a MoneyMarket account
+     * @param holder the Profile holder for the MoneyMarket account
+     * @param balance the initial balance for the MoneyMarket account
      */
     public MoneyMarket(Profile holder, double balance)
     {
@@ -27,6 +32,10 @@ public class MoneyMarket extends Savings
         }
     }
 
+    /**
+     * Determines the monthly fee for the MoneyMarket account
+     * @return the monthly fee of the MoneyMarket account
+     */
     @Override
     public double monthlyFee()
     {
@@ -42,6 +51,10 @@ public class MoneyMarket extends Savings
         return fee;
     }
 
+    /**
+     * Determines the monthly interest for the MoneyMarket account
+     * @return the monthly interest for the MoneyMarket account
+     */
     @Override
     public double monthlyInterest()
     {
@@ -52,6 +65,10 @@ public class MoneyMarket extends Savings
             return NOT_LOYAL_MONTHLY_INTEREST;
     }
 
+    /**
+     * Rechecks the loyalty status of the Profile holder in
+     * the MoneyMarket account
+     */
     public void recheckLoyalStatus()
     {
         if(getBalance() >= MIN_BALANCE_FOR_NO_FEE)

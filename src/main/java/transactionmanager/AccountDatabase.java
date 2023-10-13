@@ -1,14 +1,19 @@
 package transactionmanager;
 
+/**
+ * This class defines an AccountDatabase
+ * for organizing Accounts
+ * @author Aveesh Patel, Patryk Dziedzic
+ */
 public class AccountDatabase
 {
     private Account[] accounts; //list of various types of accounts
+
     private int numAcct; //number of accounts in the array
 
     public static final int GROWTH_RATE = 4;
 
     public static final int NOT_FOUND = -1;
-
 
     /**
      * Getter for numAcct
@@ -135,20 +140,39 @@ public class AccountDatabase
     }
 
     /**
-     *
-     * @param account
-     * @return
+     * Finds an account and withdraws a specified amount of money from it
+     * @param account the account to withdraw money from with specified balance to withdraw
+     * @return true or false dependent on if the withdrawal was successful
      */
     public boolean withdraw(Account account) //false if insufficient fund
     {
-
-
+        int index = find(account);
+        if(index != -1)
+        {
+            double acctBalance = accounts[index].getBalance();
+            double withdrawBalance = account.getBalance();
+            accounts[index].setBalance(acctBalance - withdrawBalance);
+            return true;
+        }
+        else
+            return false;
     }
+
+    /**
+     * Finds an account and deposits a specified amount of money into it
+     * @param account the account to deposit money into with the specified balance to deposit
+     */
     public void deposit(Account account)
     {
-
-
+        int index = find(account);
+        if(index != -1)
+        {
+            double acctBalance = accounts[index].getBalance();
+            double depositBalance = account.getBalance();
+            accounts[index].setBalance(acctBalance + depositBalance);
+        }
     }
+
     public void printSorted() //sort by account type and profile
     {
 

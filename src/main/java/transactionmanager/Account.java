@@ -1,8 +1,14 @@
 package transactionmanager;
 
+/**
+ * This abstract class defines an Account on
+ * the AccountDatabase
+ * @author Aveesh Patel, Patryk Dziedzic
+ */
 public abstract class Account implements Comparable<Account>
 {
     protected Profile holder;
+
     protected double balance;
 
     /**
@@ -27,17 +33,25 @@ public abstract class Account implements Comparable<Account>
     }
 
     /**
+     * Sets the balance of the account
+     * @param balance the balance to add or subtract from the account
+     */
+    protected void setBalance(double balance)
+    {
+        this.balance = balance;
+    }
+
+    /**
      * Determines whether two accounts are the same (or equal)
      * @param acct the account to be compared
      * @return true or false depending on whether the two accounts are equal
      */
-    @Override
     public boolean equals(Account acct)
     {
-        /*if(holder.equals(acct.holder) && balance == acct.getBalance())
+        if(holder.equals(acct.holder))
             return true;
         else
-            return false;*/
+            return false;
     }
 
 
