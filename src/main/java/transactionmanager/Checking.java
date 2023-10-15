@@ -67,4 +67,14 @@ public class Checking extends Account
     {
         return 0;
     }
+
+    /**
+     * Overridden method which returns the textual representation of a Checking account
+     * @return the textual representation of a Checking account
+     */
+    @Override
+    public String toString()
+    {
+        return super.toString() + "(C)";
+    }
 }

@@ -54,5 +54,15 @@ public abstract class Account implements Comparable<Account>
             return false;
     }
 
+    /**
+     * Overridden method which returns the textual representation of an Account
+     * @return the textual representation of an Account
+     */
+    @Override
+    public String toString()
+    {
+        return holder.getFname() + " " + holder.getLname() + " " + holder.getDob();
+    }
+
 
 }

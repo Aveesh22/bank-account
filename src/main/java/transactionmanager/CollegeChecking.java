@@ -31,4 +31,14 @@ public class CollegeChecking extends Checking
     {
         return NO_MONTHLY_FEE;
     }
+
+    /**
+     * Overridden method which returns the textual representation of a College Checking account
+     * @return the textual representation of a College Checking account
+     */
+    @Override
+    public String toString()
+    {
+        return holder.getFname() + " " + holder.getLname() + " " + holder.getDob() + "(CC)";
+    }
 }

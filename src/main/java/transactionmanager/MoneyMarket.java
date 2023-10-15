@@ -22,14 +22,9 @@ public class MoneyMarket extends Savings
      */
     public MoneyMarket(Profile holder, double balance)
     {
-        if(balance < MIN_BALANCE_FOR_NO_FEE)
-            System.out.println("Minimum of $2000 to open a Money Market account.");
-        else
-        {
             this.holder = holder;
             this.balance = balance;
             isLoyal = true;
-        }
     }
 
     /**
@@ -75,5 +70,11 @@ public class MoneyMarket extends Savings
             isLoyal = true;
         else
             isLoyal = false;
+    }
+
+    @Override
+    public String toString()
+    {
+        return holder.getFname() + " " + holder.getLname() + " " + holder.getDob() + "(MM)";
     }
 }

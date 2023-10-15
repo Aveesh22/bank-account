@@ -1,5 +1,6 @@
 package transactionmanager;
 
+import java.lang.reflect.Array;
 import java.util.Scanner;
 
 /**
@@ -8,6 +9,7 @@ import java.util.Scanner;
  */
 public class TransactionManager
 {
+    private static final int MIN_BALANCE_FOR_NO_FEE_IN_MONEY_MARKET = 2000;
     private AccountDatabase database = new AccountDatabase();
 
     /**
@@ -24,31 +26,28 @@ public class TransactionManager
             double balance = Double.parseDouble(cmd[Command.MONEY.getIndex()]);
             Account acct = null;
 
-            switch (cmd[Command.ACCT.getIndex()]) {
-                case "C":
-                    acct = new Checking(holder, balance);
-                    break;
-                case "CC":
-                    int code = Integer.parseInt(cmd[Command.CODE.getIndex()]);
-                    for (Campus campus : Campus.values()) {
-                        if (campus.getCode() == code) {
-                            acct = new CollegeChecking(holder, balance, campus);
-                        }
+            if(isFuture(dob))
+                System.out.println("DOB invalid: " + dob + " cannot be today or a future day.");
+            else if(!dob.isValid())
+                System.out.println("DOB invalid: " + dob + " not a valid calendar date!");
+            else if(balance <= 0)
+                System.out.println("Initial deposit cannot be 0 or negative.");
+            else
+            {
+                acct = createAccount(cmd);
+                /*if(database.contains(acct))
+                {
+                    System.out.println(acct + " is already in the database.");
+                }
+                else*/
+                {
+                    if(acct != null)
+                    {
+                        database.open(acct);
+                        System.out.println(acct + " opened.");
                     }
-                    break;
-                case "S":
-                    boolean isLoyal = Integer.parseInt(cmd[Command.CODE.getIndex()]) == 1;
-                    acct = new Savings(holder, balance, isLoyal);
-                    break;
-                case "M":
-                    acct = new MoneyMarket(holder, balance);
-                    break;
-                default:
-                    System.out.println("Invalid account type.");
-                    break;
+                }
             }
-
-            boolean result = database.open(acct);
         }
         catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Missing data for opening an account.");
@@ -58,24 +57,130 @@ public class TransactionManager
         }
     }
 
+    private Account createAccount(String[] cmd)
+    {
+        String fname = cmd[Command.FNAME.getIndex()];
+        String lname = cmd[Command.LNAME.getIndex()];
+        Date dob = new Date(cmd[Command.DOB.getIndex()]);
+        Profile holder = new Profile(fname, lname, dob);
+        double balance = Double.parseDouble(cmd[Command.MONEY.getIndex()]);
+        Account acct = null;
+
+        switch (cmd[Command.ACCT.getIndex()]) {
+            case "C":
+                acct = new Checking(holder, balance);
+                break;
+            case "CC":
+                int code = Integer.parseInt(cmd[Command.CODE.getIndex()]);
+                for (Campus campus : Campus.values()) {
+                    if (campus.getCode() == code) {
+                        acct = new CollegeChecking(holder, balance, campus);
+                    }
+                }
+                break;
+            case "S":
+                boolean isLoyal = Integer.parseInt(cmd[Command.CODE.getIndex()]) == 1;
+                acct = new Savings(holder, balance, isLoyal);
+                break;
+            case "MM":
+                if (balance < MIN_BALANCE_FOR_NO_FEE_IN_MONEY_MARKET) {
+                    System.out.println("Minimum of $2000 to open a Money Market account.");
+                    break;
+                }
+                acct = new MoneyMarket(holder, balance);
+                break;
+            default:
+                System.out.println("Invalid account type.");
+                break;
+        }
+        return acct;
+    }
 
     /**
      * Run the C command:
      * Close an existing account and remove it from the database.
      * @param cmd The current input line as a String array of tokens
      */
-    private void cmdC(String[] cmd) {
+    private void cmdC(String[] cmd)
+    {
+        try
+        {
+            String fname = cmd[Command.FNAME.getIndex()];
+            String lname = cmd[Command.LNAME.getIndex()];
+            Date dob = new Date(cmd[Command.DOB.getIndex()]);
+            Profile holder = new Profile(fname, lname, dob);
+            Account acct;
 
+            if(isFuture(dob))
+                System.out.println("DOB invalid: " + dob + " cannot be today or a future day.");
+            else if(!dob.isValid())
+                System.out.println("DOB invalid: " + dob + " not a valid calendar date!");
+            else
+            {
+                acct = createAccount(cmd); //PROBLEM HERE WITH INSUFFICIENT ARGS FOR CLOSING --> ALL ARE CAUGHT
+                database.close(acct);
+            }
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+            System.out.println("Missing data for closing an account.");
+        }
     }
 
+    /**
+     * Check if a Profile holder's date of birth is today or in the future
+     * @param dob the date of birth to check
+     * @return true if the date of birth is today or a future date.
+     */
+    private boolean isFuture(Date dob) {
+        Date today = Date.today();
+        boolean result;
+        if (dob.getYear() == today.getYear()) { //year == current year
+            if (dob.getMonth() == today.getMonth()) {
+                result = dob.getDay() > today.getDay();
+            }
+            else
+                result = dob.getMonth() > today.getMonth();
+        }
+        else
+            result = dob.getYear() > today.getYear(); //year > current year
+
+        if(today.equals(dob))
+            return true;
+
+        return result;
+    }
 
     /**
      * Run the D command:
      * Deposit money into an existing account.
      * @param cmd The current input line as a String array of tokens
      */
-    private void cmdD(String[] cmd) {
+    private void cmdD(String[] cmd)
+    {
+        try
+        {
+            String fname = cmd[Command.FNAME.getIndex()];
+            String lname = cmd[Command.LNAME.getIndex()];
+            Date dob = new Date(cmd[Command.DOB.getIndex()]);
+            Profile holder = new Profile(fname, lname, dob);
+            double balance = Double.parseDouble(cmd[Command.MONEY.getIndex()]);
+            Account acct;
 
+            if(balance <= 0)
+                System.out.println("Deposit - amount cannot be 0 or negative.");
+            else
+            {
+                /*acct = createAccount(cmd);
+                database.deposit(acct);
+                System.out.println(acct + " Deposit - balance updated.");*/ //PROBLEM HERE AS WELL
+            }
+
+        }
+        catch(NumberFormatException e)
+        {
+            System.out.println("Not a valid amount.");
+        }
     }
 
 
@@ -84,7 +189,9 @@ public class TransactionManager
      * Withdraw money from an existing account.
      * @param cmd The current input line as a String array of tokens
      */
-    private void cmdW(String[] cmd) {
+    private void cmdW(String[] cmd)
+    {
+
 
     }
 
@@ -118,8 +225,6 @@ public class TransactionManager
             System.out.println("Account Database is empty!");
     }
 
-
-
     /**
      * Read and parse user input commands.
      */
@@ -151,7 +256,8 @@ public class TransactionManager
                         };
                     }
                 }
-                else break;
+                else
+                    break;
             }
             currLine = scanner.nextLine();
         }

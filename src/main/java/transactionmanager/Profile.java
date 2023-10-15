@@ -59,4 +59,47 @@ public class Profile implements Comparable<Profile>
             }
         }
     }
+
+    /**
+     * Determines whether two profile holders are the same person or not
+     * @param holder the Profile holder to check if they are the same holder
+     * @return true or false depending on if the two profile holders are the same
+     */
+
+    public boolean equals(Profile holder) {
+        if(fname.equals(holder.getFname()) &&
+            lname.equals(holder.getLname()) &&
+                dob.equals(holder.getDob()))
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Gets the first name of the Profile holder of the Account
+     * @return a String depicting the holder's first name
+     */
+    protected String getFname()
+    {
+        return fname;
+    }
+
+    /**
+     * Gets the last name of the Profile holder of the Account
+     * @return a String depicting the holder's last name
+     */
+    protected String getLname()
+    {
+        return lname;
+    }
+
+    /**
+     * Gets the date of the birth of the Profile holder of the Account
+     * @return a Date depicting the date of birth of the Profile holder
+     */
+    protected Date getDob()
+    {
+        return dob;
+    }
+
 }

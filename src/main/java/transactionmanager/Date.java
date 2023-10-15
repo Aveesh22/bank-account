@@ -187,6 +187,18 @@ public class Date implements Comparable<Date>
     }
 
     /**
+     * Determine whether two dates are the same date
+     * @param date the date to be compared to
+     * @return true or false depending on whether the dates are the same
+     */
+    public boolean equals(Date date)
+    {
+        return year == date.getYear() &&
+                month == date.getMonth() &&
+                day == date.getDay();
+    }
+
+    /**
      * Get today's date.
      * @return today's date
      */

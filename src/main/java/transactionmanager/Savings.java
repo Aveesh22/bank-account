@@ -67,4 +67,10 @@ public class Savings extends Account
     {
         return 0;
     }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "(S)";
+    }
 }

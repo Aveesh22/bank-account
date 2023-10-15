@@ -16,6 +16,16 @@ public class AccountDatabase
     public static final int NOT_FOUND = -1;
 
     /**
+     * No-parameter constructor which initializes the accounts variable
+     * and sets the numAcct variable to the length of the accounts variable
+     */
+    public AccountDatabase()
+    {
+        accounts = new Account[GROWTH_RATE];
+        setNumAcct();
+    }
+
+    /**
      * Getter for numAcct
      * @return the number of accounts in the list
      */
@@ -77,9 +87,12 @@ public class AccountDatabase
      */
     public boolean contains(Account account) //overload if necessary
     {
+        if(numAcct == 0)
+            return false;
+
         for(Account a: accounts)
         {
-            if(a.equals(account))
+            if(a != null && a.equals(account))
                 return true;
         }
         return false;
@@ -151,6 +164,8 @@ public class AccountDatabase
         {
             double acctBalance = accounts[index].getBalance();
             double withdrawBalance = account.getBalance();
+            if(withdrawBalance > acctBalance)
+                return false;
             accounts[index].setBalance(acctBalance - withdrawBalance);
             return true;
         }
