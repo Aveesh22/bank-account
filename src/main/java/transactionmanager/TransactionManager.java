@@ -21,33 +21,26 @@ public class TransactionManager
      */
     private void cmdO(String[] cmd) {
         try {
+            String fname = cmd[Command.FNAME.getIndex()];
+            String lname = cmd[Command.LNAME.getIndex()];
             Date dob = new Date(cmd[Command.DOB.getIndex()]);
+            Profile holder = new Profile(fname, lname, dob);
             double balance = Double.parseDouble(cmd[Command.MONEY.getIndex()]);
+            Account acct;
 
-            if(isFuture(dob))
-                System.out.println("DOB invalid: " + dob + " cannot be today or a future day.");
-            else if(!dob.isValid())
-                System.out.println("DOB invalid: " + dob + " not a valid calendar date!");
-            else if(!isOfAge(dob))
-                System.out.println("DOB invalid: " + dob + " under 16.");
-            else if(cmd[Command.ACCT.getIndex()].equals("CC") && !isOfAge_College(dob))
-                System.out.println("DOB invalid: " + dob + " over 24.");
-            else if(balance <= 0)
-                System.out.println("Initial deposit cannot be 0 or negative.");
-            else
-            {
-                Account acct = createAccount(cmd);
-                if(database.contains(acct))
-                {
-                    System.out.println(acct + " is already in the database.");
-                }
-                else
-                {
-                    if(acct != null)
-                    {
-                        database.open(acct);
-                        System.out.println(acct + " opened.");
+            if (acctIsValid(cmd, dob, balance)) {
+                acct = createAccount(cmd, holder, balance);
+                if (acct != null) {
+                    if (acct instanceof Checking) {
+                        if (database.contains((Checking) acct, true))
+                            System.out.println(acct + " is already in the database.");
+                        else if (database.open(acct))
+                            System.out.println(acct + " opened.");
                     }
+                    else if (database.contains(acct))
+                        System.out.println(acct + " is already in the database.");
+                    else if (database.open(acct))
+                            System.out.println(acct + " opened.");
                 }
             }
         }
@@ -59,15 +52,39 @@ public class TransactionManager
         }
     }
 
-    private Account createAccount(String[] cmd)
-    {
-        String fname = cmd[Command.FNAME.getIndex()];
-        String lname = cmd[Command.LNAME.getIndex()];
-        Date dob = new Date(cmd[Command.DOB.getIndex()]);
-        Profile holder = new Profile(fname, lname, dob);
-        double balance = Double.parseDouble(cmd[Command.MONEY.getIndex()]);
-        Account acct = null;
+    /**
+     * Check if the account is valid
+     * @param cmd
+     * @param dob
+     * @param balance
+     * @return
+     */
+    private boolean acctIsValid(String[] cmd, Date dob, double balance) {
+        if(isFuture(dob))
+            System.out.println("DOB invalid: " + dob + " cannot be today or a future day.");
+        else if(!dob.isValid())
+            System.out.println("DOB invalid: " + dob + " not a valid calendar date!");
+        else if(!isOfAge(dob))
+            System.out.println("DOB invalid: " + dob + " under 16.");
+        else if(cmd[Command.ACCT.getIndex()].equals("CC") && !isOfAge_College(dob))
+            System.out.println("DOB invalid: " + dob + " over 24.");
+        else if(balance <= 0)
+            System.out.println("Initial deposit cannot be 0 or negative.");
+        else
+            return true;
+        return false;
+    }
 
+    /**
+     * Create an Account object with the command line parameters
+     * @param cmd the command line parameters
+     * @param holder the Profile holder for the Account
+     * @param balance the balance for the Account
+     * @return the instantiated Account object
+     */
+    private Account createAccount(String[] cmd, Profile holder, double balance)
+    {
+        Account acct = null;
         switch (cmd[Command.ACCT.getIndex()]) {
             case "C":
                 acct = new Checking(holder, balance);
@@ -121,8 +138,15 @@ public class TransactionManager
                 System.out.println("DOB invalid: " + dob + " not a valid calendar date!");
             else
             {
-                acct = createAccount(cmd); //PROBLEM HERE WITH INSUFFICIENT ARGS FOR CLOSING --> ALL ARE CAUGHT
-                database.close(acct);
+                acct = createAccount_Closing(cmd, holder);
+                if (acct != null) {
+                    if (!database.contains(acct))
+                        System.out.println(acct + " is not in the database.");
+                    else {
+                        if (database.close(acct))
+                            System.out.println(acct + " has been closed.");
+                    }
+                }
             }
         }
         catch(ArrayIndexOutOfBoundsException e)
@@ -130,6 +154,37 @@ public class TransactionManager
             System.out.println("Missing data for closing an account.");
         }
     }
+
+    /**
+     * Create an Account object with a Profile and default values
+     * @param cmd the command line parameters
+     * @param holder the Profile holder for the Account
+     * @return the instantiated Account object
+     */
+    private Account createAccount_Closing(String[] cmd, Profile holder)
+    {
+        Account acct = null;
+        switch (cmd[Command.ACCT.getIndex()]) {
+            case "C":
+                acct = new Checking(holder);
+                break;
+            case "CC":
+                acct = new CollegeChecking(holder);
+                break;
+            case "S":
+                acct = new Savings(holder);
+                break;
+            case "MM":
+                acct = new MoneyMarket(holder);
+                break;
+            default:
+                System.out.println("Invalid account type.");
+                break;
+        }
+        return acct;
+    }
+
+
 
     /**
      * Check if a Profile holder's date of birth is today or in the future

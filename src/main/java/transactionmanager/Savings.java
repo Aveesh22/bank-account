@@ -24,6 +24,14 @@ public class Savings extends Account
     }
 
     /**
+     * Parameterized constructor with only a Profile
+     * @param holder Profile object for the account holder
+     */
+    public Savings(Profile holder) {
+        this.holder = holder;
+    }
+
+    /**
      * Parameterized constructor which initializes a Savings account
      * @param holder Profile object for the account holder
      * @param balance current balance in the account

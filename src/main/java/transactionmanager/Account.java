@@ -94,10 +94,7 @@ public abstract class Account implements Comparable<Account>
     {
         if (obj instanceof Account) {
             Account acct = (Account) obj;
-            if (acct instanceof Checking)
-                return holder.equals(acct.holder);
-            else
-                return this.getClass().equals(acct.getClass()) && holder.equals(acct.holder);
+            return this.getClass().equals(acct.getClass()) && holder.equals(acct.holder);
         }
         return false;
     }

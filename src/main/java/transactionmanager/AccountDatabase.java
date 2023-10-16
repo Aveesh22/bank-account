@@ -99,6 +99,30 @@ public class AccountDatabase
     }
 
     /**
+     * Returns a boolean true or false checking if the Checking account
+     * is somewhere in the array
+     * @param checkAcct the account to be checked in the array
+     * @param includeCollege true when
+     * @return a boolean true or false depicting if the account is in the accounts array
+     */
+    public boolean contains(Checking checkAcct, boolean includeCollege) //overload if necessary
+    {
+        //open an account - check both for checking and college checking (true)
+        //close an account - check only for the specific kind of checking (false)
+        if(numAcct == 0)
+            return false;
+
+        if (!includeCollege) contains(checkAcct);
+
+        for(Account a: accounts)
+        {
+            if (a instanceof Checking && a.holder.equals(checkAcct.holder))
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * Opens a new account by adding a new account in the accounts array
      * @param account the account to be added
      * @return a boolean true or false depicting whether or not the account was added successfully

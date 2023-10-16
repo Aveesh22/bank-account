@@ -16,6 +16,14 @@ public class MoneyMarket extends Savings
     private int withdrawal; //number of withdrawals
 
     /**
+     * Parameterized constructor with only a Profile
+     * @param holder Profile object for the account holder
+     */
+    public MoneyMarket(Profile holder) {
+        this.holder = holder;
+    }
+
+    /**
      * Parameterized Constructor which initializes a MoneyMarket account
      * @param holder the Profile holder for the MoneyMarket account
      * @param balance the initial balance for the MoneyMarket account

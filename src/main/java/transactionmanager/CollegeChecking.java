@@ -14,6 +14,14 @@ public class CollegeChecking extends Checking
     public static final double NO_MONTHLY_FEE = 0.00;
 
     /**
+     * Parameterized constructor with only a Profile
+     * @param holder Profile object for the account holder
+     */
+    public CollegeChecking(Profile holder) {
+        this.holder = holder;
+    }
+
+    /**
      * Parameterized constructor
      * @param holder Profile object for the account holder
      * @param balance current balance in the account

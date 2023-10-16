@@ -24,6 +24,16 @@ public class Checking extends Account
 
     /**
      * Parameterized constructor to initialize a Checking account instance
+     * with only a Profile
+     * @param holder Profile object for the account holder
+     */
+    public Checking(Profile holder)
+    {
+        this.holder = holder;
+    }
+
+    /**
+     * Parameterized constructor to initialize a Checking account instance
      * @param holder Profile object for the account holder
      * @param balance current balance in the account
      */
