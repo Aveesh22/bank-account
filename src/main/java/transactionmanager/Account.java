@@ -70,7 +70,8 @@ public abstract class Account implements Comparable<Account>
 
     /**
      * Compares two accounts and returns an integer value depicting the
-     * result of the comparison between them on an alphabetical basis.
+     * result of the comparison between them. It is first sorted alphabetically
+     * by account type, and then by Profile holder.
      * @param acct the account to be compared to
      * @return -1, 0, 1
      */

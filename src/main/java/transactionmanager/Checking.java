@@ -1,7 +1,5 @@
 package transactionmanager;
 
-import java.text.DecimalFormat;
-
 /**
  * This class defines a Checking account with specific
  * parameters for monthly interest and fees and inherits

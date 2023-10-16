@@ -1,7 +1,5 @@
 package transactionmanager;
 
-import java.text.DecimalFormat;
-
 /**
  * This class defines a College Checking account with specific parameters
  * for monthly fees and inherits other properties and behaviors from
