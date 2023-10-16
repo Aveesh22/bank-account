@@ -179,9 +179,9 @@ public class AccountDatabase
     /**
      * Finds an account and withdraws a specified amount of money from it
      * @param account the account to withdraw money from with specified balance to withdraw
-     * @return true or false dependent on if the withdrawal was successful
+     * @return false if there is an insufficient fund
      */
-    public boolean withdraw(Account account) //false if insufficient fund
+    public boolean withdraw(Account account)
     {
         int index = find(account);
         if(index != -1)
@@ -228,7 +228,15 @@ public class AccountDatabase
     }
     public void printUpdatedBalances() //apply the interests/fees
     {
-
+        for (Account a : accounts) {
+            if (a != null) {
+                double tempBalance = a.getBalance();
+                tempBalance -= a.monthlyFee();
+                tempBalance += a.monthlyInterest();
+                a.setBalance(tempBalance);
+                if (a instanceof MoneyMarket) ((MoneyMarket) a).setWithdrawal(0);
+            }
+        }
         printSorted();
     }
 }

@@ -22,6 +22,16 @@ public class CollegeChecking extends Checking
     }
 
     /**
+     * Parameterized constructor with only a Profile and a balance
+     * @param holder Profile object for the account holder
+     * @param balance balance for the account
+     */
+    public CollegeChecking(Profile holder, double balance) {
+        this.holder = holder;
+        this.balance = balance;
+    }
+
+    /**
      * Parameterized constructor
      * @param holder Profile object for the account holder
      * @param balance current balance in the account

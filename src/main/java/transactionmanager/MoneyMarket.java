@@ -30,9 +30,9 @@ public class MoneyMarket extends Savings
      */
     public MoneyMarket(Profile holder, double balance)
     {
-            this.holder = holder;
-            this.balance = balance;
-            isLoyal = true;
+        this.holder = holder;
+        this.balance = balance;
+        isLoyal = true;
     }
 
     /**
@@ -96,6 +96,14 @@ public class MoneyMarket extends Savings
             isLoyal = true;
         else
             isLoyal = false;
+    }
+
+    public int getWithdrawal() {
+        return withdrawal;
+    }
+
+    public void setWithdrawal(int withdrawal) {
+        this.withdrawal = withdrawal;
     }
 
     @Override

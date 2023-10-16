@@ -1,6 +1,5 @@
 package transactionmanager;
 
-import java.lang.reflect.Array;
 import java.util.Scanner;
 
 /**
@@ -138,7 +137,7 @@ public class TransactionManager
                 System.out.println("DOB invalid: " + dob + " not a valid calendar date!");
             else
             {
-                acct = createAccount_Closing(cmd, holder);
+                acct = createAccount_Close(cmd, holder);
                 if (acct != null) {
                     if (!database.contains(acct))
                         System.out.println(acct + " is not in the database.");
@@ -161,7 +160,7 @@ public class TransactionManager
      * @param holder the Profile holder for the Account
      * @return the instantiated Account object
      */
-    private Account createAccount_Closing(String[] cmd, Profile holder)
+    private Account createAccount_Close(String[] cmd, Profile holder)
     {
         Account acct = null;
         switch (cmd[Command.ACCT.getIndex()]) {
@@ -271,11 +270,16 @@ public class TransactionManager
                 System.out.println("Deposit - amount cannot be 0 or negative.");
             else
             {
-                /*acct = createAccount(cmd);
-                database.deposit(acct);
-                System.out.println(acct + " Deposit - balance updated.");*/ //PROBLEM HERE AS WELL
+                acct = createAccount_Deposit(cmd, holder, balance);
+                if (acct != null) {
+                    if (!database.contains(acct))
+                        System.out.println(acct + " is not in the database.");
+                    else {
+                        database.deposit(acct);
+                        System.out.println(acct + " Deposit - balance updated.");
+                    }
+                }
             }
-
         }
         catch(NumberFormatException e)
         {
@@ -283,6 +287,35 @@ public class TransactionManager
         }
     }
 
+    /**
+     * Create an Account object with the command line parameters
+     * @param cmd the command line parameters
+     * @param holder the Profile holder for the Account
+     * @param balance the balance for the Account
+     * @return the instantiated Account object
+     */
+    private Account createAccount_Deposit(String[] cmd, Profile holder, double balance)
+    {
+        Account acct = null;
+        switch (cmd[Command.ACCT.getIndex()]) {
+            case "C":
+                acct = new Checking(holder, balance);
+                break;
+            case "CC":
+                acct = new CollegeChecking(holder, balance);
+                break;
+            case "S":
+                acct = new Savings(holder, balance);
+                break;
+            case "MM":
+                acct = new MoneyMarket(holder, balance);
+                break;
+            default:
+                System.out.println("Invalid account type.");
+                break;
+        }
+        return acct;
+    }
 
     /**
      * Run the W command:
@@ -291,8 +324,36 @@ public class TransactionManager
      */
     private void cmdW(String[] cmd)
     {
+        try
+        {
+            String fname = cmd[Command.FNAME.getIndex()];
+            String lname = cmd[Command.LNAME.getIndex()];
+            Date dob = new Date(cmd[Command.DOB.getIndex()]);
+            Profile holder = new Profile(fname, lname, dob);
+            double balance = Double.parseDouble(cmd[Command.MONEY.getIndex()]);
+            Account acct;
 
-
+            if(balance <= 0)
+                System.out.println("Withdraw - amount cannot be 0 or negative.");
+            else
+            {
+                acct = createAccount_Deposit(cmd, holder, balance);
+                if (acct != null) {
+                    if (!database.contains(acct))
+                        System.out.println(acct + " is not in the database.");
+                    else {
+                        if (database.withdraw(acct))
+                            System.out.println(acct + " Withdraw - balance updated.");
+                        else
+                            System.out.println(acct + " Withdraw - insufficient fund.");
+                    }
+                }
+            }
+        }
+        catch(NumberFormatException e)
+        {
+            System.out.println("Not a valid amount.");
+        }
     }
 
 
