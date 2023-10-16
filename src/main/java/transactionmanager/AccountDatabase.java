@@ -233,8 +233,8 @@ public class AccountDatabase
         for (Account a : accounts) {
             if (a != null) {
                 double tempBalance = a.getBalance();
+                tempBalance += a.monthlyInterest()/12 * tempBalance;
                 tempBalance -= a.monthlyFee();
-                tempBalance += a.monthlyInterest();
                 a.setBalance(tempBalance);
                 if (a instanceof MoneyMarket)
                     ((MoneyMarket) a).setWithdrawal(0);
