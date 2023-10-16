@@ -183,8 +183,6 @@ public class TransactionManager
         return acct;
     }
 
-
-
     /**
      * Check if a Profile holder's date of birth is today or in the future
      * @param dob the date of birth to check
@@ -355,9 +353,6 @@ public class TransactionManager
             System.out.println("Not a valid amount.");
         }
     }
-
-
-
 
     /**
      * Run the P, PI, or UB command:

@@ -191,6 +191,8 @@ public class AccountDatabase
             if(withdrawBalance > acctBalance)
                 return false;
             accounts[index].setBalance(acctBalance - withdrawBalance);
+            if(account instanceof MoneyMarket)
+                ((MoneyMarket) accounts[index]).setWithdrawal(((MoneyMarket) accounts[index]).getWithdrawal() + 1);
             return true;
         }
         else
@@ -234,7 +236,8 @@ public class AccountDatabase
                 tempBalance -= a.monthlyFee();
                 tempBalance += a.monthlyInterest();
                 a.setBalance(tempBalance);
-                if (a instanceof MoneyMarket) ((MoneyMarket) a).setWithdrawal(0);
+                if (a instanceof MoneyMarket)
+                    ((MoneyMarket) a).setWithdrawal(0);
             }
         }
         printSorted();

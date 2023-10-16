@@ -47,7 +47,7 @@ public abstract class Account implements Comparable<Account>
     public String printOutput_PI() {
         return printOutput() + "::fee " +
                 DecimalFormat.getCurrencyInstance().format(monthlyFee()) + "::monthly interest " +
-                DecimalFormat.getCurrencyInstance().format(monthlyInterest());
+                DecimalFormat.getCurrencyInstance().format(monthlyInterest()/12 * balance);
     }
 
     /**

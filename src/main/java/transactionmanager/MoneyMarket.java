@@ -12,7 +12,6 @@ public class MoneyMarket extends Savings
     public static final int NUM_MAX_WITHDRAWALS = 3;
     public static final double IS_LOYAL_MONTHLY_INTEREST = 0.0475;
     public static final double NOT_LOYAL_MONTHLY_INTEREST = 0.045;
-
     private int withdrawal; //number of withdrawals
 
     /**
@@ -98,14 +97,26 @@ public class MoneyMarket extends Savings
             isLoyal = false;
     }
 
+    /**
+     * Gets the number of withdrawals from the Money Market account
+     * @return the number of withdrawals
+     */
     public int getWithdrawal() {
         return withdrawal;
     }
 
+    /**
+     * Sets the number of withdrawals for the Money Market account
+     * @param withdrawal the number of withdrawals
+     */
     public void setWithdrawal(int withdrawal) {
         this.withdrawal = withdrawal;
     }
 
+    /**
+     * Overridden method which returns the textual representation of a Money Market account
+     * @return the textual representation of a Money Market account
+     */
     @Override
     public String toString()
     {

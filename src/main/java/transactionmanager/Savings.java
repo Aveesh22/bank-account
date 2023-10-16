@@ -103,6 +103,10 @@ public class Savings extends Account
             return super.printOutput();
     }
 
+    /**
+     * Overridden method which returns the textual representation of a Savings account
+     * @return the textual representation of a Savings account
+     */
     @Override
     public String toString()
     {
