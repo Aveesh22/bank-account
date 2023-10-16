@@ -69,8 +69,8 @@ public class Profile implements Comparable<Profile>
     public boolean equals(Object obj) {
         if (obj instanceof Profile) {
             Profile holder = (Profile) obj;
-            return fname.equals(holder.getFname()) &&
-                    lname.equals(holder.getLname()) &&
+            return fname.equalsIgnoreCase(holder.getFname()) &&
+                    lname.equalsIgnoreCase(holder.getLname()) &&
                     dob.equals(holder.getDob());
         }
         return false;

@@ -68,18 +68,6 @@ public class Checking extends Account
     }
 
     /**
-     * Overrides the compareTo() method to compare
-     * two accounts
-     * @param account the account to be compared to
-     * @return -1, 0, or 1
-     */
-    @Override
-    public int compareTo(Account account)
-    {
-        return 0;
-    }
-
-    /**
      * Overridden method which returns the textual representation of a Checking account
      * @return the textual representation of a Checking account
      */

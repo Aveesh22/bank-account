@@ -10,6 +10,8 @@ import java.util.Scanner;
 public class TransactionManager
 {
     private static final int MIN_BALANCE_FOR_NO_FEE_IN_MONEY_MARKET = 2000;
+    private static final int OF_AGE = 16;
+    private static final int OVER_COLLEGE_AGE = 24;
     private AccountDatabase database = new AccountDatabase();
 
     /**
@@ -19,27 +21,27 @@ public class TransactionManager
      */
     private void cmdO(String[] cmd) {
         try {
-            String fname = cmd[Command.FNAME.getIndex()];
-            String lname = cmd[Command.LNAME.getIndex()];
             Date dob = new Date(cmd[Command.DOB.getIndex()]);
-            Profile holder = new Profile(fname, lname, dob);
             double balance = Double.parseDouble(cmd[Command.MONEY.getIndex()]);
-            Account acct = null;
 
             if(isFuture(dob))
                 System.out.println("DOB invalid: " + dob + " cannot be today or a future day.");
             else if(!dob.isValid())
                 System.out.println("DOB invalid: " + dob + " not a valid calendar date!");
+            else if(!isOfAge(dob))
+                System.out.println("DOB invalid: " + dob + " under 16.");
+            else if(cmd[Command.ACCT.getIndex()].equals("CC") && !isOfAge_College(dob))
+                System.out.println("DOB invalid: " + dob + " over 24.");
             else if(balance <= 0)
                 System.out.println("Initial deposit cannot be 0 or negative.");
             else
             {
-                acct = createAccount(cmd);
-                /*if(database.contains(acct))
+                Account acct = createAccount(cmd);
+                if(database.contains(acct))
                 {
                     System.out.println(acct + " is already in the database.");
                 }
-                else*/
+                else
                 {
                     if(acct != null)
                     {
@@ -77,6 +79,8 @@ public class TransactionManager
                         acct = new CollegeChecking(holder, balance, campus);
                     }
                 }
+                if (acct == null)
+                    System.out.println("Invalid campus code.");
                 break;
             case "S":
                 boolean isLoyal = Integer.parseInt(cmd[Command.CODE.getIndex()]) == 1;
@@ -152,6 +156,47 @@ public class TransactionManager
     }
 
     /**
+     * Check if a Profile holder is of age
+     * @param dob the date of birth to check
+     * @return true if the holder is of age
+     */
+    private boolean isOfAge(Date dob) {
+        Date today = Date.today();
+        int difference = today.getYear() - dob.getYear();
+        if (difference == OF_AGE) {
+            if (dob.getMonth() > today.getMonth())
+                return false;
+            else if (dob.getMonth() < today.getMonth())
+                return true;
+            else
+                return dob.getDay() <= today.getDay();
+        }
+        else
+            return difference >= OF_AGE;
+    }
+
+    /**
+     * Check if a Profile holder is of college age
+     * @param dob the date of birth to check
+     * @return true if the holder is of college age
+     */
+    private boolean isOfAge_College(Date dob) {
+        if (!isOfAge(dob)) return false;
+        Date today = Date.today();
+        int difference = today.getYear() - dob.getYear();
+        if (difference == OVER_COLLEGE_AGE) {
+            if (dob.getMonth() > today.getMonth())
+                return true;
+            else if (dob.getMonth() < today.getMonth())
+                return false;
+            else
+                return dob.getDay() > today.getDay();
+        }
+        else
+            return today.getYear() - dob.getYear() < OVER_COLLEGE_AGE;
+    }
+
+    /**
      * Run the D command:
      * Deposit money into an existing account.
      * @param cmd The current input line as a String array of tokens
@@ -205,6 +250,7 @@ public class TransactionManager
      */
     private void cmdP(String[] cmd) {
         if (database.getNumAcct() > 0) {
+            System.out.println();
             switch (cmd[Command.COMMAND.getIndex()]) {
                 case "PI":
                     System.out.println("*list of accounts with fee and monthly interest");
@@ -220,6 +266,7 @@ public class TransactionManager
                     break;
             }
             System.out.println("*end of list.");
+            System.out.println();
         }
         else
             System.out.println("Account Database is empty!");

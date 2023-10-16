@@ -84,12 +84,6 @@ public class Savings extends Account
     }
 
     @Override
-    public int compareTo(Account account)
-    {
-        return 0;
-    }
-
-    @Override
     public String toString()
     {
         return holder.toString() + "(S)";

@@ -77,7 +77,11 @@ public abstract class Account implements Comparable<Account>
     @Override
     public int compareTo(Account acct)
     {
-        return acct.getClass().getName().compareTo(this.getClass().getName());
+        int result = this.accountType().compareTo(acct.accountType());
+        if (result == 0) {
+            return this.holder.compareTo(acct.holder);
+        }
+        else return result;
     }
 
     /**
@@ -90,7 +94,10 @@ public abstract class Account implements Comparable<Account>
     {
         if (obj instanceof Account) {
             Account acct = (Account) obj;
-            return holder.equals(acct.holder);
+            if (acct instanceof Checking)
+                return holder.equals(acct.holder);
+            else
+                return this.getClass().equals(acct.getClass()) && holder.equals(acct.holder);
         }
         return false;
     }
