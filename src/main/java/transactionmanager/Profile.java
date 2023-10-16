@@ -62,16 +62,17 @@ public class Profile implements Comparable<Profile>
 
     /**
      * Determines whether two profile holders are the same person or not
-     * @param holder the Profile holder to check if they are the same holder
+     * @param obj the Profile holder to check if they are the same holder
      * @return true or false depending on if the two profile holders are the same
      */
-
-    public boolean equals(Profile holder) {
-        if(fname.equals(holder.getFname()) &&
-            lname.equals(holder.getLname()) &&
-                dob.equals(holder.getDob()))
-            return true;
-
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Profile) {
+            Profile holder = (Profile) obj;
+            return fname.equals(holder.getFname()) &&
+                    lname.equals(holder.getLname()) &&
+                    dob.equals(holder.getDob());
+        }
         return false;
     }
 
@@ -102,4 +103,13 @@ public class Profile implements Comparable<Profile>
         return dob;
     }
 
+    /**
+     * Overridden method which returns the textual representation of a Profile
+     * @return the textual representation of a Profile
+     */
+    @Override
+    public String toString()
+    {
+        return fname + " " + lname + " " + dob;
+    }
 }

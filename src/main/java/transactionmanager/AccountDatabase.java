@@ -190,14 +190,21 @@ public class AccountDatabase
 
     public void printSorted() //sort by account type and profile
     {
-
+        Quicksort.sort(accounts);
+        for (int i = 0; i < numAcct; i++) {
+            System.out.println(accounts[i].printOutput());
+        }
     }
     public void printFeesAndInterests() //calculate interests/fees
     {
-
+        Quicksort.sort(accounts);
+        for (int i = 0; i < numAcct; i++) {
+            System.out.println(accounts[i].printOutput_PI());
+        }
     }
     public void printUpdatedBalances() //apply the interests/fees
     {
 
+        printSorted();
     }
 }

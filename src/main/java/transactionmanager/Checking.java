@@ -1,5 +1,7 @@
 package transactionmanager;
 
+import java.text.DecimalFormat;
+
 /**
  * This class defines a Checking account with specific
  * parameters for monthly interest and fees and inherits
@@ -57,6 +59,15 @@ public class Checking extends Account
     }
 
     /**
+     * Overrides the accountType() method to return the class name
+     * @return the account type as a String
+     */
+    @Override
+    public String accountType() {
+        return "Checking";
+    }
+
+    /**
      * Overrides the compareTo() method to compare
      * two accounts
      * @param account the account to be compared to
@@ -75,6 +86,6 @@ public class Checking extends Account
     @Override
     public String toString()
     {
-        return super.toString() + "(C)";
+        return holder.toString() + "(C)";
     }
 }

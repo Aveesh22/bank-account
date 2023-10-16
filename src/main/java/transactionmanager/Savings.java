@@ -62,6 +62,27 @@ public class Savings extends Account
             return MONTHLY_FEE;
     }
 
+    /**
+     * Overrides the accountType() method to return the class name
+     * @return the account type as a String
+     */
+    @Override
+    public String accountType() {
+        return "Savings";
+    }
+
+    /**
+     * Determines the String to print for the account
+     * @return the output String
+     */
+    @Override
+    public String printOutput() {
+        if (isLoyal)
+            return super.printOutput() + "::is loyal";
+        else
+            return super.printOutput();
+    }
+
     @Override
     public int compareTo(Account account)
     {
@@ -71,6 +92,6 @@ public class Savings extends Account
     @Override
     public String toString()
     {
-        return super.toString() + "(S)";
+        return holder.toString() + "(S)";
     }
 }

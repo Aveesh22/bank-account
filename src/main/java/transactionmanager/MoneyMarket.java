@@ -61,6 +61,24 @@ public class MoneyMarket extends Savings
     }
 
     /**
+     * Overrides the accountType() method to return the class name
+     * @return the account type as a String
+     */
+    @Override
+    public String accountType() {
+        return "Money Market::" + super.accountType();
+    }
+
+    /**
+     * Determines the String to print for the account
+     * @return the output String
+     */
+    @Override
+    public String printOutput() {
+        return super.printOutput() + "::withdrawal: " + withdrawal;
+    }
+
+    /**
      * Rechecks the loyalty status of the Profile holder in
      * the MoneyMarket account
      */
@@ -75,6 +93,6 @@ public class MoneyMarket extends Savings
     @Override
     public String toString()
     {
-        return holder.getFname() + " " + holder.getLname() + " " + holder.getDob() + "(MM)";
+        return holder.toString() + "(MM)";
     }
 }

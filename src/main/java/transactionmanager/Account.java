@@ -1,5 +1,7 @@
 package transactionmanager;
 
+import java.text.DecimalFormat;
+
 /**
  * This abstract class defines an Account on
  * the AccountDatabase
@@ -24,6 +26,31 @@ public abstract class Account implements Comparable<Account>
     public abstract double monthlyFee();
 
     /**
+     * Determines the account type
+     * @return the account type as a String
+     */
+    public abstract String accountType();
+
+    /**
+     * Determines the String to print for the account
+     * @return the output String
+     */
+    public String printOutput() {
+        return accountType() + "::" + holder.toString() + "::" + "Balance " +
+                DecimalFormat.getCurrencyInstance().format(balance);
+    }
+
+    /**
+     * Determines the String to print for the account for PI
+     * @return the output String
+     */
+    public String printOutput_PI() {
+        return printOutput() + "::fee " +
+                DecimalFormat.getCurrencyInstance().format(monthlyFee()) + "::monthly interest " +
+                DecimalFormat.getCurrencyInstance().format(monthlyInterest());
+    }
+
+    /**
      * Get the balance of the account
      * @return the balance of the account
      */
@@ -42,27 +69,29 @@ public abstract class Account implements Comparable<Account>
     }
 
     /**
-     * Determines whether two accounts are the same (or equal)
-     * @param acct the account to be compared
-     * @return true or false depending on whether the two accounts are equal
+     * Compares two accounts and returns an integer value depicting the
+     * result of the comparison between them on an alphabetical basis.
+     * @param acct the account to be compared to
+     * @return -1, 0, 1
      */
-    public boolean equals(Account acct)
+    @Override
+    public int compareTo(Account acct)
     {
-        if(holder.equals(acct.holder))
-            return true;
-        else
-            return false;
+        return acct.getClass().getName().compareTo(this.getClass().getName());
     }
 
     /**
-     * Overridden method which returns the textual representation of an Account
-     * @return the textual representation of an Account
+     * Determines whether two accounts are the same (or equal)
+     * @param obj the account to be compared
+     * @return true or false depending on whether the two accounts are equal
      */
     @Override
-    public String toString()
+    public boolean equals(Object obj)
     {
-        return holder.getFname() + " " + holder.getLname() + " " + holder.getDob();
+        if (obj instanceof Account) {
+            Account acct = (Account) obj;
+            return holder.equals(acct.holder);
+        }
+        return false;
     }
-
-
 }

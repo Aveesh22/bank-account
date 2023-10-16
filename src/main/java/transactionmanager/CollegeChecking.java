@@ -1,5 +1,7 @@
 package transactionmanager;
 
+import java.text.DecimalFormat;
+
 /**
  * This class defines a College Checking account with specific parameters
  * for monthly fees and inherits other properties and behaviors from
@@ -33,12 +35,30 @@ public class CollegeChecking extends Checking
     }
 
     /**
+     * Overrides the accountType() method to return the class name
+     * @return the account type as a String
+     */
+    @Override
+    public String accountType() {
+        return "College Checking";
+    }
+
+    /**
+     * Determines the String to print for the account
+     * @return the output String
+     */
+    @Override
+    public String printOutput() {
+        return super.printOutput() + "::" + campus.name();
+    }
+
+    /**
      * Overridden method which returns the textual representation of a College Checking account
      * @return the textual representation of a College Checking account
      */
     @Override
     public String toString()
     {
-        return holder.getFname() + " " + holder.getLname() + " " + holder.getDob() + "(CC)";
+        return holder.toString() + "(CC)";
     }
 }
