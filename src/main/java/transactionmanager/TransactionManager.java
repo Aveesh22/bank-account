@@ -56,7 +56,7 @@ public class TransactionManager
      * @param cmd The current input line as a String array of tokens
      * @param dob the date of birth of the Profile holder
      * @param balance the balance of the account
-     * @return true or false dependent on if the account is valid or not 
+     * @return true or false dependent on if the account is valid or not
      */
     private boolean acctIsValid(String[] cmd, Date dob, double balance) {
         if(isFuture(dob))
