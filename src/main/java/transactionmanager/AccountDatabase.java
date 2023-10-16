@@ -214,13 +214,20 @@ public class AccountDatabase
         }
     }
 
-    public void printSorted() //sort by account type and profile
+    /**
+     * Prints the accounts in the AccountDatabase sorted by account type and profile
+     */
+    public void printSorted()
     {
         Quicksort.sort(accounts);
         for (int i = 0; i < numAcct; i++) {
             System.out.println(accounts[i].printOutput());
         }
     }
+
+    /**
+     * Prints the accounts in the AccountDatabase with fees and interests
+     */
     public void printFeesAndInterests() //calculate interests/fees
     {
         Quicksort.sort(accounts);
@@ -228,6 +235,11 @@ public class AccountDatabase
             System.out.println(accounts[i].printOutput_PI());
         }
     }
+
+    /**
+     * Prints the updated balances of the Accounts in the AccountDatabase
+     * with the inclusion of interests and fees
+     */
     public void printUpdatedBalances() //apply the interests/fees
     {
         for (Account a : accounts) {

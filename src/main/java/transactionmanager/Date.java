@@ -84,8 +84,9 @@ public class Date implements Comparable<Date>
     }
 
     /**
-     * This method compares 2 dates.
-     * @return an integer -1, 0, or 1
+     * Compares two dates
+     * @param date the date to be compared to
+     * @return -1, 0, 1
      */
     @Override
     public int compareTo(Date date) {
